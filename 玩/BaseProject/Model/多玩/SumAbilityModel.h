@@ -8,7 +8,6 @@
 
 #import "BaseModel.h"
 
-@class Esarray;
 @interface SumAbilityModel : BaseModel
 @property (nonatomic, copy) NSString *strong;
 

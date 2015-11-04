@@ -8,14 +8,24 @@
 
 #import <Foundation/Foundation.h>
 
-#define kCompletionHandle completionHandle:(void(^)(id model, NSError *error))completionHandle
+#define kCompletionHandle completionHandle:(void(^)(id model, NSError *error))completionHandle;
 
 @interface BaseNetManager : NSObject
-//方法：把path参数拼接起来，把字符串的中文转换为百分号形势，因为有的服务器不接收中文编码
-//+(NSString *)percentPathWithPath:(NSString *)path params:(NSDictionary *)params;
-//get传参，传的是地址，
+
+/** 对AFHTTPSessionManager的GET请求方法进行了封装 */
 + (id)GET:(NSString *)path parameters:(NSDictionary *)params completionHandler:(void(^)(id responseObj, NSError *error))complete;
 
+/** 对AFHTTPSessionManager的POST请求方法进行了封装 */
 + (id)POST:(NSString *)path parameters:(NSDictionary *)params completionHandler:(void(^)(id responseObj, NSError *error))complete;
+
+/**
+ *  为了应付某些服务器对于中文字符串不支持的情况，需要转化字符串为带有%号形势
+ *
+ *  @param path   请求的路径，即 ? 前面部分
+ *  @param params 请求的参数，即 ? 号后面部分
+ *
+ *  @return 转化 路径+参数 拼接出的字符串中的中文为 % 号形势
+ */
++ (NSString *)percentPathWithPath:(NSString *)path params:(NSDictionary *)params;
 
 @end

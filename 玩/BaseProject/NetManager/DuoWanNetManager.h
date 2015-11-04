@@ -2,24 +2,80 @@
 //  DuoWanNetManager.h
 //  BaseProject
 //
-//  Created by apple-jd18 on 15/11/3.
+//  Created by jiyingxin on 15/11/3.
 //  Copyright © 2015年 Tarena. All rights reserved.
 //
 
 #import "BaseNetManager.h"
-//很多具有共同占的东西，可以统一宏定义，比如凡是自己写的宏定义，都需要用k开头，这是编码习惯
-#define kOSType  @"OSType":@"ios9.1"
-//把path写到文件头部，使用宏定义形势，方便后期维护
-//#define kHeropathL @""
-#define kHeroPath @"http://lolbox.duowan.com/phone/apiHeroes.php"//免费+英雄
-#define kHeroSkinPath @"http://box.dwstatic.com/apiHeroSkin.php"//英雄头像
-#define kHeroVideoPath @"http://box.dwstatic.com/apiVideoesNormalDuowan.php"//视频
-#define kHeroCZPath @"http://db.duowan.com/lolcz/img/ku11/api/lolcz.php"//出装
-#define kHeroDetailPath @"http://lolbox.duowan.com/phone/apiHeroDetail.php"//资料
-#define  KHeroGiftPath @"http://box.dwstatic.com/apiHeroSuggestedGiftAndRun.php"//排行
-#define kHeroChangePath @"http://db.duowan.com/boxnews/heroinfo.php"//改动
-#define kHeroWeekDataPath @"http://183.61.12.108/apiHeroWeekData.php"//一周数据
+
+/** 在多玩Model层中专门创建的头文件，目的只有一个，方便其他类引入多玩的全部头文件 */
+#import "DuoWanModel.h"
+
+typedef NS_ENUM(NSUInteger, HeroType) {
+    HeroTypeFree,   //免费英雄
+    HeroTypeAll,    //全部英雄
+};
 
 @interface DuoWanNetManager : BaseNetManager
+//使用 /** 内容 */ 方式添加注释，可以让你的代码被调用时出现代码提示
+
+/**
+ *  获取免费英雄或收费英雄列表， 因为免费和收费英雄请求串十分相似，所以合写
+ *
+ *  @param type 请求英雄类型
+ *
+ *  @return 当前请求所在任务
+ */
++ (id)getHeroWithType:(HeroType)type kCompletionHandle;
+
+/**
+ *  获取英雄皮肤
+ *
+ *  @param heroName 要获取皮肤的英雄英文名称
+ *
+ *  @return 请求所在任务
+ */
++ (id)getHeroSkinsWithHeroName:(NSString *)heroName kCompletionHandle;
+
+/**
+ *  获取英雄配音
+ *
+ *  @param heroName 英雄英文名
+ *
+ *  @return 网络请求任务
+ */
++ (id)getHeroSoundWithHeroName:(NSString *)heroName kCompletionHandle;
+
+/**
+ *  获取某英雄相关视频
+ *
+ *  @param page   视频页数,最小为1. eg 1,2,3,4...
+ *  @param enName 英雄英文名
+ *
+ *  @return 网络请求任务
+ */
++ (id)getHeroVideosWithPage:(NSInteger)page tag:(NSString *)enName kCompletionHandle;
+
+/**
+ *  获取某英雄出装
+ *
+ *  @param enName 英雄英文名
+ *
+ *  @return 网络请求任务
+ */
++ (id)getHeroCZWithHeroName:(NSString *)enName kCompletionHandle;
 
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
